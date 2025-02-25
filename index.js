@@ -1,25 +1,22 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const app = express();
 const PORT = 4000;
 
 const userRoute = require("./src/routes/userRoute");
+const connectDB = require('./db');
 
-const mongoose = require("mongoose");
+// Connect to the database
+connectDB();
 
-mongoose
-  .connect("mongodb://localhost:27017/E_Com", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Database Connected");
-  })
-  .catch((err) => {
-    console.error("Database Connection Error: ", err);
-  });
+// Middleware to parse JSON requests and cookies
+app.use(express.json());
+app.use(cookieParser());
 
+// Use the user routes
 app.use("/", userRoute);
 
+// Start the server
 app.listen(PORT, () => {
-  console.log(`server running http://localhost:4000`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

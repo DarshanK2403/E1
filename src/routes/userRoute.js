@@ -1,4 +1,5 @@
 const express = require('express');
+const userController = require('../controllers/userController');
 const router = express.Router();
 
 // Root route
@@ -7,13 +8,9 @@ router.get('/', (req, res) => {
 });
 
 // Login route
-router.get('/login', (req, res) => {
-  res.send('Login page');
-});
+router.post('/login', userController.login);
 
 // Signup route
-router.get('/signup', (req, res) => {
-  res.send('Signup page');
-});
+router.post('/signup', userController.signup);
 
 module.exports = router;
